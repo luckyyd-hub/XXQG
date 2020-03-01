@@ -8,13 +8,12 @@
 @time: 2019-08-09(星期五) 12:01
 @Copyright © 2019. All rights reserved.
 '''
-import json,datetime
+import json
 from random import choice
 from pathlib import Path
 from time import sleep
 from .. import logger, cfg
 from ..common import timer
-
 
 class Reader:
     '''设计思路：
@@ -202,20 +201,12 @@ class Reader:
             #if(len(self.xm.pos(cfg.get(self.rules, 'rule_news_bounds')))<2):
             #print("reader_lin193:", self.xm.texts(cfg.get(self.rules, 'rule_news_content')))
             #print(self.xm.pos(cfg.get(self.rules, 'rule_news_bounds')))
-            today = str(datetime.date.today())
-            pos_rule = cfg.get(self.rules, 'rule_news_bounds')
-            pos_rule = pos_rule.replace("2020-03-01",today)
-            pos = self.xm.pos(pos_rule)
-            
-            content_rule = cfg.get(self.rules, 'rule_news_content')
-            content_rule = content_rule.replace("2020-03-01",today)
-            content = self.xm.texts(content_rule)
-
-            # print("reader_205_pos:",pos)
+            pos = self.xm.pos(cfg.get(self.rules, 'rule_news_bounds'))
+            print("reader_205_pos:",pos)
             if(len(pos)==1):
                 pos = [pos]
 
-            articles = [(t, p) for t, p in zip(content, pos)]
+            articles = [(t, p) for t, p in zip(self.xm.texts(cfg.get(self.rules, 'rule_news_content')), pos)]
             logger.info(f"aricles:{articles}")
             if(articles == []):
                 print("slide")
@@ -254,10 +245,8 @@ class Reader:
                 if 0 == count:
                     break
                 else:
-                    #self.ad.slide(complex(self.fixed.real, article[1].imag), self.fixed, duration=1000)
+                    self.ad.slide(complex(self.fixed.real, article[1].imag), self.fixed, duration=1000)
                     sleep(3)
-            print("next slide")
-            self.ad.slide(complex(400, 1300), complex(400, 200), duration=2000)
         sleep(5)
         
 

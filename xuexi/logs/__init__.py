@@ -41,8 +41,10 @@ def create_logger(loggername:str='logger', levelname:str='DEBUG'):
     handler_console.setLevel(logging.INFO)
 
     now = time.strftime("%Y%m%d")
-    common_filename = path/'LOG'/f'{now}.log'
-    handler_common = logging.FileHandler(common_filename , mode='a+', encoding='utf-8')
+    #common_filename = path/'LOG'/f'{now}.log'
+    common_filename = path / 'LOG' / f'log.log'
+    #handler_common = logging.FileHandler(common_filename, mode='a+', encoding='utf-8')
+    handler_common = logging.FileHandler(common_filename , mode='w+', encoding='utf-8')
     handler_common.setLevel(levels[levelname])
     handler_common.setFormatter(logger_format)
 
